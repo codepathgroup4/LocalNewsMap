@@ -4,11 +4,26 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class LocalNewsListActivity extends Activity {
     private long dma;
+    public final String BASE_URL = "http://mobile-homerun-yql.media.yahoo.com:4080/v2/localnews/newsfeed?dma_id=";
+    private ArrayList<News> newsList = new ArrayList<News>();
+    private ArrayAdapter<News> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +32,8 @@ public class LocalNewsListActivity extends Activity {
         dma =
                 getIntent().getLongExtra("dma", 0);
         Toast.makeText(this, String.valueOf(dma), Toast.LENGTH_SHORT).show();
+
+        fetchLocalNews(String.valueOf(dma));
     }
 
 
@@ -40,5 +57,35 @@ public class LocalNewsListActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void fetchLocalNews(String dmaId) {
+        String url = BASE_URL + dmaId;
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        adapter = new NewsArrayAdapter(this, newsList);
+        ListView lvNewsStream = (ListView) findViewById(R.id.lvNewsStream);
+        lvNewsStream.setAdapter(adapter);
+
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                JSONArray newsListJSON = null;
+
+                try {
+                    newsList.clear();
+                    newsListJSON = response.getJSONObject("items").getJSONArray("result");
+                    adapter.addAll(News.fromJsonArray(newsListJSON));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }
