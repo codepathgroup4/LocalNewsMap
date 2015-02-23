@@ -1,6 +1,0 @@
-/Users/xiaohu/LocalNewsMap/app/build/intermediates/classes/debug
-/Users/xiaohu/LocalNewsMap/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-4bf192dff683e10f8ddea2727b0171a4a229a81b.jar
-/Users/xiaohu/LocalNewsMap/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.6-f4766af7fafe7a292a0dca0f3feb215cc9203229.jar
-/Users/xiaohu/LocalNewsMap/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-3b3e3bdaf93a2d26b482b8155ac5c0fb50164a5a.jar
-/Users/xiaohu/LocalNewsMap/app/build/intermediates/pre-dexed/debug/classes-94fb54966e4ca592f650f0383e78afc61106cf00.jar
-/Users/xiaohu/LocalNewsMap/app/build/intermediates/pre-dexed/debug/classes-26e94786a83ec77a5abc6dd38958abe3f70be065.jar
