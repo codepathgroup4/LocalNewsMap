@@ -6,5 +6,6 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_local_news_list">LocalNewsListActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_news_detail">NewsDetailActivity</string>
 
 </resources>

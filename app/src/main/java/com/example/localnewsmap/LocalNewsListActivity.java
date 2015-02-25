@@ -1,9 +1,12 @@
 package com.example.localnewsmap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -66,6 +69,15 @@ public class LocalNewsListActivity extends Activity {
         adapter = new NewsArrayAdapter(this, newsList);
         ListView lvNewsStream = (ListView) findViewById(R.id.lvNewsStream);
         lvNewsStream.setAdapter(adapter);
+        lvNewsStream.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                News news = newsList.get(position);
+                Intent intent = new Intent(LocalNewsListActivity.this, NewsDetailActivity.class);
+                intent.putExtra("news", news);
+                startActivity(intent);
+            }
+        });
 
         client.get(url, new JsonHttpResponseHandler() {
             @Override

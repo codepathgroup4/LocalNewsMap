@@ -1,11 +1,13 @@
 package com.example.localnewsmap;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -14,7 +16,7 @@ import java.text.ParseException;
 /**
  * Created by daisych on 2/22/15.
  */
-public class News {
+public class News implements Serializable {
     private String title;
     private String link;
     private String publishedAt;
@@ -35,6 +37,7 @@ public class News {
             news.imageUrl = json.getJSONObject("main_image").getString("original_url");
             news.publisher = json.getString("publisher");
             news.publishedAt = getRelativeTimeAgo(json.getString("ts_update"));
+            news.content = json.getString("content");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -59,17 +62,10 @@ public class News {
     }
 
     public static String getRelativeTimeAgo(String rawJsonDate) {
-        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
-        sf.setLenient(true);
-        String relativeDate = "";
-        try {
-            long dateMillis = sf.parse(rawJsonDate).getTime();
-            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+            long dateMillis = Long.parseLong(rawJsonDate);
+            String relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
                     System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
         return relativeDate;
     }
 
