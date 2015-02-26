@@ -34,7 +34,7 @@ public class LocalNewsListActivity extends Activity {
         setContentView(R.layout.activity_local_news_list);
         dma =
                 getIntent().getLongExtra("dma", 0);
-        Toast.makeText(this, String.valueOf(dma), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, String.valueOf(dma), Toast.LENGTH_SHORT).show();
 
         fetchLocalNews(String.valueOf(dma));
     }
